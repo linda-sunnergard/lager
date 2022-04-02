@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import config from "../config/config.json";
+import * as Font from 'expo-font';
+import { AppLoading } from 'expo';
 
 function StockList() {
   const [products, setProducts] = useState([]);
@@ -11,7 +13,7 @@ function StockList() {
       .then(result => setProducts(result.data));
   }, []);
 
-  const list = products.map((product, index) => <Text key={index}>{ product.name } - { product.stock }</Text>);
+  const list = products.map((product, index) => <Text style={styles.stock} key={index}>{ product.name } - { product.stock }</Text>);
 
   return (
     <View>
@@ -22,9 +24,27 @@ function StockList() {
 
 export default function Stock() {
   return (
-    <View>
-      <Text style={{color: '#333', fontSize: 24}}>Lagerförteckning</Text>
-      <StockList/>
+    <View style={styles.main}>
+      <Text style={styles.text}>Lagerförteckning</Text>
+      <StockList />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  main: {
+    paddingLeft: 110,
+  },
+  text: {
+    color: '#000000',
+    fontSize: 24,
+    marginTop: 15,
+    marginBottom: 5,
+  },
+  stock: {
+    fontSize: 15,
+    lineHeight: 15,
+    marginBottom: 10,
+    marginTop: 0,
+    },
+});
