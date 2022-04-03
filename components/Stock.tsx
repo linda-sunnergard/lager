@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import config from "../config/config.json";
-import * as Font from 'expo-font';
-import { AppLoading } from 'expo';
 
 function StockList() {
   const [products, setProducts] = useState([]);
