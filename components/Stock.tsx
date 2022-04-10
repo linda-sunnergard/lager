@@ -1,48 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import config from "../config/config.json";
 
-function StockList() {
-  const [products, setProducts] = useState([]);
+import { Base, Typography } from '../styles';
+import StockList from "./StockList.tsx"
 
-  useEffect(() => {
-    fetch(`${config.base_url}/products?api_key=${config.api_key}`)
-      .then(response => response.json())
-      .then(result => setProducts(result.data));
-  }, []);
 
-  const list = products.map((product, index) => <Text style={styles.stock} key={index}>{ product.name } - { product.stock }</Text>);
-
+export default function Stock(props) {
   return (
-    <View>
-      {list}
+    <View style={{...Base.stockMain}}>
+      <Text style={{...Base.stockText}}>Lagerförteckning</Text>
+      <StockList products={props.products} setProducts={props.setProducts}/>
     </View>
   );
 }
-
-export default function Stock() {
-  return (
-    <View style={styles.main}>
-      <Text style={styles.text}>Lagerförteckning</Text>
-      <StockList />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  main: {
-    paddingLeft: 110,
-  },
-  text: {
-    color: '#000000',
-    fontSize: 24,
-    marginTop: 15,
-    marginBottom: 5,
-  },
-  stock: {
-    fontSize: 15,
-    lineHeight: 15,
-    marginBottom: 10,
-    marginTop: 0,
-    },
-});
