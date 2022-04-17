@@ -42,10 +42,28 @@ export const stock = {
   marginBottom: 10,
   marginTop: 0,
 }
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
+
+export const input = {
+    fontSize: 15,
+    lineHeight: 15,
+    border: '1px solid #ccc',
+    borderRadius: 0.2,
+    padding: 0.6,
+    width: 32,
+    marginBottom: 1.4,
+}
+
+export const inputValid = {
+    border: '1px solid green',
+}
+
+export const inputInValid = {
+    border: '1px solid red',
+}
+
+export const first = {
+  flex: 1,
+  padding: 12,
+  lineHeight: 1.4,
+  color: "#333",
+}

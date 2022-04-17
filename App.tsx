@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import Home from "./components/Home.tsx";
 import Pick from "./components/Pick.tsx";
+import Deliveries from "./components/Deliveries.tsx";
 import productModel from './models/products.ts';
 import { Base, Typography } from './styles'
 
@@ -15,6 +16,7 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [products, setProducts] = useState([]);
+  const [deliveries, setDeliveries] = useState<Partial<Delivery>>({});
 
   return (
     <SafeAreaView style={{...Base.container}}>
@@ -39,6 +41,9 @@ export default function App() {
       <Tab.Screen name="Plock" style={{...Base.base}}>
         {() => <Pick products={products} setProducts={setProducts} />}
       </Tab.Screen>
+      <Tab.Screen name="Leveranser" style={{...Base.base}}>
+        {() => <Deliveries deliveries={deliveries} setDeliveries={setDeliveries} />}
+      </Tab.Screen>
     </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />
@@ -49,6 +54,5 @@ export default function App() {
 const routeIcons = {
   "Lager": "leaf",
   "Plock": "gift",
+  "Leveranser": "file-tray-full"
 };
-
-      // <Tab.Screen name="Plock" component={Pick} style={{...Base.base}} />

@@ -1,6 +1,6 @@
 import config from "../config/config.json";
 import productModel from "./products.ts";
-import Order from "../interfaces/order,ts";
+import Order from "../interfaces/order.ts";
 import OrderItem from "../interfaces/order_item";
 
 const orderModel = {

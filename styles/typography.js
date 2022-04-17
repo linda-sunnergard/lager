@@ -9,8 +9,8 @@ export const header2 = {
 };
 
 export const header3 = {
-    fontSize: 28,
-    marginBottom: 28,
+    fontSize: 20,
+    marginTop: 10,
 };
 
 export const normal = {
