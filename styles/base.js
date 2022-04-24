@@ -2,12 +2,21 @@ export const container = {
     flex: 1,
 };
 
+export const home = {
+    flex: 1,
+    backgroundColor: '#80A06B',
+}
+
 export const base = {
     flex: 1,
     backgroundColor: '#80A06B',
     paddingLeft: 12,
     paddingRight: 12,
 };
+
+export const tab = {
+    backgroundColor: "#667750",
+}
 
 export const text = {
     color: '#000000',

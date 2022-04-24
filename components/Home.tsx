@@ -10,7 +10,7 @@ export default function Home(props) {
 
   return (
     <SafeAreaView style={{...Base.container}}>
-      <View style={{...Base.base}}>
+      <View style={{...Base.home}}>
         <Text style={{...Base.text}}>Frö-Appen</Text>
         <Image source={plants} style={{ width: 415, height: 240 }} />
         <Stock products={props.products} setProducts={props.setProducts}/>

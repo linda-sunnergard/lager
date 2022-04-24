@@ -3,22 +3,22 @@ import { View, Text, Button } from "react-native";
 
 import orderModel from "../models/orders.ts";
 import config from "./../config/config.json";
-import { Base, Typography } from '../styles';
+import { Base, Typography, Forms } from '../styles';
 
 export default function OrderList({ route, navigation }) {
     const {reload} = route.params || false;
     const [allOrders, setAllOrders] = useState([]);
 
     if (reload) {
-    reloadOrders();
+        reloadOrders();
     }
 
     async function reloadOrders() {
-      setAllOrders(await orderModel.getOrders());
+        setAllOrders(await orderModel.getOrders());
     }
 
     useEffect(() => {
-      reloadOrders();
+        reloadOrders();
     }, []);
 
     useEffect(() => {

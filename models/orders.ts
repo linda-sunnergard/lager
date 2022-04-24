@@ -10,6 +10,14 @@ const orderModel = {
 
         return result.data;
     },
+
+    getOrder: async function getOrder(order_id: number) {
+        const response = await fetch(`${config.base_url}/orders/${order_id}?api_key=${config.api_key}`);
+        const result = await response.json();
+
+        return result.data
+    },
+
     pickOrder: async function pickOrder(order: Partial<Order>) {
       try {
         await Promise.all(order.order_items.map(async (order_item: Partial<OrderItem>) => {
@@ -35,6 +43,7 @@ const orderModel = {
         console.log("Could not update order items " + error.message);
       }
     },
+
     updateOrder: async function updateOrder(order: Partial<Order>) {
       try {
         await fetch(`${config.base_url}/orders?api_key=${config.api_key}`, {

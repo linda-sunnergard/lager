@@ -30,22 +30,22 @@ export default function DeliveriesForm({ route, navigation, deliveries, setDeliv
     }
 
     return (
-        <ScrollView style={{ ...Base.first }}>
+        <ScrollView style={{ ...Base.base }}>
             <Text style={{ ...Typography.header2 }}>Ny inleverans</Text>
 
-            <DateDropDown
+            <DateDropDown style={{ ...Typography.normal }}
               delivery={delivery}
               setDelivery={setDelivery}
             />
 
-            <Text style={{ ...Typography.label }}>Produkt</Text>
+            <Text style={{ ...Typography.normal }}>Produkt</Text>
             <ProductDropDown
                 delivery={delivery}
                 setDelivery={setDelivery}
                 setCurrentProduct={setCurrentProduct}
             />
 
-            <Text style={{ ...Typography.label }}>Antal</Text>
+            <Text style={{ ...Typography.normal }}>Antal</Text>
             <TextInput
                 style={{ ...Forms.input }}
                 onChangeText={(content: string) => {
@@ -55,7 +55,7 @@ export default function DeliveriesForm({ route, navigation, deliveries, setDeliv
                 keyboardType="numeric"
             />
 
-            <Text style={{ ...Typography.label }}>Kommentar</Text>
+            <Text style={{ ...Typography.normal }}>Kommentar</Text>
             <TextInput
                 style={{ ...Forms.input }}
                 onChangeText={(content: string) => {

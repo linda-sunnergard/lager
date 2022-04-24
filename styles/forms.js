@@ -6,3 +6,13 @@ export const input = {
     borderColor: "#ccc",
     borderRadius: 3,
 };
+
+export const buttons = {
+    flex: 0.2,
+    flexDirection: "column",
+    justifyContent: "space-between",
+}
+
+export const button = {
+  color: "black"
+}

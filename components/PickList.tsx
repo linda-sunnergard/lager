@@ -41,7 +41,8 @@ export default function PickList({ route, navigation, products, setProducts }) {
                 key={index}
                 >
                     {item.name} - {item.amount} - {item.location}
-            </Text>;
+                </Text>
+                ;
     });
 
     return (

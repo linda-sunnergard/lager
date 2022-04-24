@@ -1,0 +1,21 @@
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import Login from './Login.tsx';
+import Register from './Register.tsx';
+import { Base, Typography } from "../../styles";
+
+const Stack = createNativeStackNavigator();
+
+export default function Deliveries(props) {
+    return (
+      <Stack.Navigator initialRouteName="Login" screenOptions={({
+        headerShown: false,
+      })}
+      style={{...Base.base}}>
+        <Stack.Screen name="Login">
+          {(screenProps) => <Login {...screenProps} setIsLoggedIn={props.setIsLoggedIn} />}
+        </Stack.Screen>
+        <Stack.Screen name="Register" component={Register} />
+      </Stack.Navigator>
+    );
+};
