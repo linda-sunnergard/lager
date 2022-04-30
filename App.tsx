@@ -11,6 +11,7 @@ import Pick from "./components/Pick.tsx";
 import Deliveries from "./components/Deliveries.tsx";
 import Auth from "./components/auth/Auth.tsx";
 import Invoices from "./components/invoices/Invoices.tsx";
+import Ship from "./components/shipments/Ship";
 
 import authModel from "./models/auth.ts";
 import { Base, Typography } from './styles';
@@ -62,6 +63,8 @@ export default function App() {
           {() => <Auth setIsLoggedIn={setIsLoggedIn} />}
         </Tab.Screen>
       }
+      <Tab.Screen name="Skicka" style={{...Base.base}} component={Ship}>
+      </Tab.Screen>
     </Tab.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />
@@ -74,5 +77,6 @@ const routeIcons = {
   "Plock": "gift",
   "Leveranser": "file-tray-full",
   "Logga in": "lock-open",
-  "Faktura": "document-text-sharp"
+  "Faktura": "document-text-sharp",
+  "Skicka": "car"
 };
