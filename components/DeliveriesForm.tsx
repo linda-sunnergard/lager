@@ -3,6 +3,7 @@ import { ScrollView, Text, TextInput, Button, View, Platform } from "react-nativ
 import { Base, Typography, Forms } from '../styles';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { showMessage } from "react-native-flash-message";
 
 import Delivery from '../interfaces/delivery.ts';
 import deliveryModel from "../models/deliveries.ts";
@@ -15,7 +16,7 @@ export default function DeliveriesForm({ route, navigation, deliveries, setDeliv
     async function addDelivery () {
         delivery.delivery_date = delivery.delivery_date || new Date().toLocaleDateString('se-SV');
 
-        await deliveryModel.addDelivery(delivery);
+        const result = await deliveryModel.addDelivery(delivery);
 
         const updatedProduct = {
             ... currentProduct,
@@ -24,9 +25,13 @@ export default function DeliveriesForm({ route, navigation, deliveries, setDeliv
 
         await productModel.updateProduct (updatedProduct);
 
-        navigation.navigate ( "List" , { reload : true });
-
-        setDeliveries(await deliveryModel.getDeliveries());
+        if (result.title === "success") {
+            showMessage(result)
+            navigation.navigate ( "List" , { reload : true });
+            setDeliveries(await deliveryModel.getDeliveries());
+        } else if (result.title === "danger") {
+            showMessage(result)
+        }
     }
 
     return (
