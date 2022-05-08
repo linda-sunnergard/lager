@@ -10,6 +10,7 @@ import getCoordinates from "../../models/nominatim";
 
 export default function ShipOrder ({ route }) {
     const { order } = route.params;
+    const [message, setMessage] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
     const [currentLocationMarker, setCurrentLocationMarker] = useState(null)
     const [isLoaded, setIsLoaded] = useState(null)
@@ -17,9 +18,14 @@ export default function ShipOrder ({ route }) {
 
     useEffect(() => {
         (async () => {
+            setMessage("Loading...")
             const result = await getCoordinates(`${order.address}, ${order.city}`);
-            setPackageCoordinates(result);
-            setIsLoaded(true);
+            if(result.length > 0) {
+                setPackageCoordinates(result);
+                setIsLoaded(true);
+            } else {
+                setMessage("Failed to find address")
+            }
         })();
     }, [])
 
@@ -55,20 +61,20 @@ export default function ShipOrder ({ route }) {
             {orderItemsList}
 
             <View style={mapStyle.container}>
-                {!isLoaded && <Text style={{...Typography.header2}}>Loading...</Text>}
+                {!isLoaded && <Text style={{...Base.warning}}>{message}</Text>}
                 {isLoaded &&
                     <MapView
                         style={mapStyle.map}
                         initialRegion={{
-                            latitude: parseFloat(packageCoordinates[0]?.lat),
-                            longitude: parseFloat(packageCoordinates[0]?.lon),
+                            latitude: parseFloat(packageCoordinates[0].lat),
+                            longitude: parseFloat(packageCoordinates[0].lon),
                             latitudeDelta: 0.1,
                             longitudeDelta: 0.1
                         }}>
                         <Marker
                             coordinate = {{
-                                latitude: parseFloat(packageCoordinates[0]?.lat),
-                                longitude: parseFloat(packageCoordinates[0]?.lon)
+                                latitude: parseFloat(packageCoordinates[0].lat),
+                                longitude: parseFloat(packageCoordinates[0].lon)
                             }}
                             title = { packageCoordinates[0].display_name }
                         />
