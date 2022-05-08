@@ -1,29 +1,31 @@
-import { render } from '@testing-library/react-native';
+import { render, fireEvent } from '@testing-library/react-native';
 import DeliveriesList from '../components/DeliveriesList';
 
 const deliveries = [
-    { product_name: "Tomat", amount: 3, delivery_date: "2022-05-01", comment: "Tomatkommentar" },
-    { product_name: "Kronärtskocka", amount: 5, delivery_date: "2022-05-02", comment: "Kronärtskockakommentar" },
-    { product_name: "Chili", amount: 9, delivery_date: "2022-05-03", comment: "Chilikommentar" },
+    { id: "1", product_name: "Tomat", amount: 3, delivery_date: "2022-05-01", comment: "Ny leverans" },
+    { id: "2", product_name: "Kronärtskocka", amount: 5, delivery_date: "2022-05-02", comment: "Ännu en leverans" },
 ];
 
 const setDeliveries = () => false;
-const navigation = () => false;
+const navigation = {
+    navigate: jest.fn(),
+};
 
-test('List should contain three items', async () => {
-    const { getByText } = render(<DeliveriesList navigation={navigation} deliveries = {deliveries} setDeliveries={setDeliveries} />);
+test('List should have deliveries', async () => {
+    const { getByText, getAllByText, getByTestId } = render(<DeliveriesList
+        navigation={navigation} 
+        deliveries = {deliveries}
+        setDeliveries={setDeliveries} />);
 
-    const tomat = await getByText('Tomat', { exact: false });
-    const tomatAmount = await getByText(3, { exact: false });
-    const tomatDeliveryDate = await getByText("2022-05-01", { exact: false });
-    const tomatComment = await getByText("Tomatkommentar", { exact: false });
+    const tomato = await getByText('Tomat', { exact: false });
+    const kronärtskocka = await getByText('Kronärtskocka', {exact: false});
 
-    expect(tomat).toBeDefined();
-    expect(tomatAmount).toBeDefined();
-    expect(tomatDeliveryDate).toBeDefined();
-    expect(tomatComment).toBeDefined();
+    expect(tomato).toBeDefined();
+    expect(kronärtskocka).toBeDefined();
 
     const buttonId = "Create Delivery Button";
     const deliveryButton = await getByTestId(buttonId)
     expect(deliveryButton).toBeDefined();
+    fireEvent.press(deliveryButton);
+    expect(navigation.navigate).toHaveBeenCalled();
 });

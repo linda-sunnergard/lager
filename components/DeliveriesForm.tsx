@@ -9,8 +9,7 @@ import Delivery from '../interfaces/delivery.ts';
 import deliveryModel from "../models/deliveries.ts";
 import productModel from "../models/products.ts";
 
-export default function DeliveriesForm({ route, navigation, deliveries, setDeliveries }) {
-    const [delivery, setDelivery] = useState<Partial<Delivery>>({});
+export default function DeliveriesForm({ route, navigation, deliveries, setDeliveries, delivery, setDelivery }) {
     const [currentProduct, setCurrentProduct] = useState<Partial<Product>>({});
 
     async function addDelivery () {
@@ -55,9 +54,11 @@ export default function DeliveriesForm({ route, navigation, deliveries, setDeliv
                 style={{ ...Forms.input }}
                 onChangeText={(content: string) => {
                     setDelivery({ ...delivery, amount: parseInt(content) })
+
                 }}
                 value={delivery?.amount?.toString()}
                 keyboardType="numeric"
+                testID="delivery-amount"
             />
 
             <Text style={{ ...Typography.normal }}>Kommentar</Text>
@@ -67,6 +68,7 @@ export default function DeliveriesForm({ route, navigation, deliveries, setDeliv
                     setDelivery({ ...delivery, comment: content })
                 }}
                 value={delivery?.comment}
+                testID="comment-field"
             />
 
 
@@ -75,6 +77,7 @@ export default function DeliveriesForm({ route, navigation, deliveries, setDeliv
                 onPress={() => {
                     addDelivery();
                 }}
+                testID="create delivery button"
             />
         </ScrollView>
     );
@@ -91,16 +94,17 @@ function ProductDropDown(props) {
       return <Picker.Item key={index} label={prod.name} value={prod.id} />;
   });
 
-  return (
-      <Picker
-          selectedValue={props.delivery?.product_id}
-          onValueChange={(itemValue, itemIndex) => {
-              props.setDelivery({ ...props.delivery, product_id: itemValue })
-              props.setCurrentProduct(products.find(product => itemValue == product.id))
-          }}>
-          {itemsList}
-      </Picker>
-  );
+    return (
+        <Picker
+            selectedValue={props.delivery?.product_id}
+            onValueChange={(itemValue, itemIndex) => {
+                props.setDelivery({ ...props.delivery, product_id: itemValue })
+                props.setCurrentProduct(products.find(product => itemValue == product.id))
+            }}
+        >
+            {itemsList}
+        </Picker>
+    );
 };
 
 function DateDropDown(props) {
@@ -114,7 +118,11 @@ function DateDropDown(props) {
     return (
         <View>
             {Platform.OS === "android" && (
-                <Button onPress={showDatePicker} title="Visa datumväljare" />
+                <Button
+                    onPress={showDatePicker}
+                    title="Visa datumväljare"
+                    testID="dateButton"
+                />
             )}
             {(show || Platform.OS === "ios") && (
                 <DateTimePicker
@@ -129,6 +137,7 @@ function DateDropDown(props) {
                         setShow(false);
                     }}
                     value={new Date()}
+                    testID="dateButton"
                 />
             )}
         </View>
