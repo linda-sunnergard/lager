@@ -6,9 +6,15 @@ import productModel from '../models/products.ts';
 
 
 export default function StockList({products, setProducts}) {
-  useEffect(async () => {
-      setProducts(await productModel.getProducts());
-  }, []);
+    async function reloadStockList() {
+        setProducts(await productModel.getProducts());
+    }
+    
+    useEffect(() => {
+      reloadStockList();
+    }, []);
+
+
 
   const list = products.map((product, index) => <Text style={{...Base.stock}} key={index}>{ product.name } - { product.stock }</Text>);
 

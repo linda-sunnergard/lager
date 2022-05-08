@@ -7,11 +7,15 @@ import deliveryModel from "../models/deliveries.ts";
 import productModel from "../models/products.ts";
 
 export default function DeliveriesList({ route, navigation, deliveries, setDeliveries }) {
-  useEffect(async () => {
-      let prevDeliveries = await deliveryModel.getDeliveries()
-      if(prevDeliveries.length > 0) {
-        setDeliveries(prevDeliveries)
-      }
+    async function reloadDeliveriesList() {
+        let prevDeliveries = await deliveryModel.getDeliveries()
+        if(prevDeliveries.length > 0) {
+          setDeliveries(prevDeliveries)
+        }
+    }
+
+  useEffect(() => {
+      reloadDeliveriesList();
   }, []);
 
   function ListOrWarn() {

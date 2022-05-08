@@ -1,4 +1,6 @@
-import { render } from '@testing-library/react-native';
+//Tester från övningar och föreläsning
+
+import { render, fireEvent } from '@testing-library/react-native';
 import AuthFields from '../components/auth/AuthFields';
 
 let auth = {};
@@ -11,7 +13,7 @@ const navigation = () => false;
 test('testing AuthFields for login', async () => {
     const title = "Logga in";
 
-    const { getByText, getByTestId, getByA11yLabel } = render(<AuthFields
+    const { getAllByText, getByTestId, getByA11yLabel } = render(<AuthFields
          auth={auth}
          setAuth={setAuth}
          submit={mockSubmit}
@@ -30,5 +32,15 @@ test('testing AuthFields for login', async () => {
     const a11yLabel = `${title} genom att trycka`;
     const submitButton = getByA11yLabel(a11yLabel)
     expect(submitButton).toBeDefined();
+    fireEvent.press(submitButton);
+    expect(mockSubmit).toHaveBeenCalled();
+
+    const fakeEmail = "abc@def.gh"
+    fireEvent.changeText(emailField, fakeEmail);
+    expect(auth?.email).toEqual(fakeEmail);
+
+    const fakepassword = "Test1!"
+    fireEvent.changeText(passwordField, fakepassword);
+    expect(auth?.password).toEqual(fakepassword);
 
 });

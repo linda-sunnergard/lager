@@ -60,15 +60,15 @@ export default function ShipOrder ({ route }) {
                     <MapView
                         style={mapStyle.map}
                         initialRegion={{
-                            latitude: parseFloat(packageCoordinates[0].lat),
-                            longitude: parseFloat(packageCoordinates[0].lon),
+                            latitude: parseFloat(packageCoordinates[0]?.lat),
+                            longitude: parseFloat(packageCoordinates[0]?.lon),
                             latitudeDelta: 0.1,
                             longitudeDelta: 0.1
                         }}>
                         <Marker
                             coordinate = {{
-                                latitude: parseFloat(packageCoordinates[0].lat),
-                                longitude: parseFloat(packageCoordinates[0].lon)
+                                latitude: parseFloat(packageCoordinates[0]?.lat),
+                                longitude: parseFloat(packageCoordinates[0]?.lon)
                             }}
                             title = { packageCoordinates[0].display_name }
                         />

@@ -1,3 +1,5 @@
+//Tester från övningar och föreläsning
+
 import { render } from '@testing-library/react-native';
 import StockList from '../components/StockList';
 

@@ -25,9 +25,13 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
   const [invoices, setInvoices] = useState([]);
 
-  useEffect(async () => {
-    setIsLoggedIn(await authModel.loggedIn());
-  }, []);
+  async function logIn() {
+        setIsLoggedIn(await authModel.loggedIn());
+  }
+
+    useEffect(() => {
+        logIn();
+    }, []);
 
   return (
     <SafeAreaView style={{...Base.container}}>
