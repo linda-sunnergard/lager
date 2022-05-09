@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { ScrollView, Text, TextInput, Button, View, Platform } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { showMessage } from "react-native-flash-message";
 
 import { Base, Typography, Forms } from "../../styles";
 
@@ -15,35 +16,40 @@ export default function InvoicesForm({ navigation }) {
     const [invoice, setInvoice] = useState<Partial<Invoice>>({});
 
     async function createInvoice() {
-        await invoiceModel.createInvoice(invoice);
 
-        navigation.navigate("List", { reload: true});
-    }
+        const result = await invoiceModel.createInvoice(invoice);
+        if (result.title === "danger") {
+            showMessage(result)
+        } else {
+            showMessage(result)
+            navigation.navigate("List", { reload: true});
+        }
+    };
 
-    return (
-        <ScrollView style={{...Base.base}}>
-            <Text style={{...Typography.header2}}>Ny faktura</Text>
+        return (
+            <ScrollView style={{...Base.base}}>
+                <Text style={{...Typography.header2}}>Ny faktura</Text>
 
-            <Text style={{...Typography.header2}}>Order</Text>
-            <OrderDropDown
-                invoice={invoice}
-                setInvoice={setInvoice}
-            />
+                <Text style={{...Typography.header2}}>Order</Text>
+                <OrderDropDown
+                    invoice={invoice}
+                    setInvoice={setInvoice}
+                />
 
-            <Text style={{...Typography.header2}}>Fakturadatum</Text>
-            <DateDropDown
-                invoice={invoice}
-                setInvoice={setInvoice}
-            />
+                <Text style={{...Typography.header2}}>Fakturadatum</Text>
+                <DateDropDown
+                    invoice={invoice}
+                    setInvoice={setInvoice}
+                />
 
-            <Button
-                title="Skapa faktura"
-                onPress={() => {
-                    createInvoice();
-                }}
-            />
-        </ScrollView>
-    );
+                <Button
+                    title="Skapa faktura"
+                    onPress={() => {
+                        createInvoice();
+                    }}
+                />
+            </ScrollView>
+        );
 };
 
 function OrderDropDown(props) {

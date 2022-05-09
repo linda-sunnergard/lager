@@ -10,7 +10,6 @@ import authModel from "../../models/auth.ts";
 export default function InvoicesList({ route, navigation, invoices, setInvoices, setIsLoggedIn}) {
     const {reload} = route.params || false;
     const [allInvoices, setAllInvoices] = useState<Invoice[]>([]);
-    //ta bort state från app?
 
     async function reloadInvoices() {
         setAllInvoices(await invoiceModel.getInvoices());

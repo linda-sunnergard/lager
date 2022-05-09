@@ -19,13 +19,16 @@ const invoicesModel = {
 
     createInvoice: async function createInvoice(invoiceObject:
         Partial<Invoice>) {
-            console.log(invoiceObject);
 
             let order = await orderModel.getOrder(invoiceObject.order_id);
-            console.log(order);
 
-            order.status_id = 600;
-            orderModel.updateOrder(order);
+            let changedOrder = {
+              id: order.id,
+              name: order.name,
+              status_id: 600,
+              api_key: config.api_key,
+            };
+            orderModel.updateOrder(changedOrder);
 
             let totalPrice = order.order_items.reduce((price, item) => {
                 return price + item.amount * item.price;
@@ -40,17 +43,29 @@ const invoicesModel = {
 
             const tokenObject: any = await storage.readToken();
 
-            try {
-                const response = await fetch(`${config.base_url}/invoices`, {
-                    body: JSON.stringify(invoiceObject),
-                    headers: {
-                        "content-type": "application/json",
-                        "x-access-token": tokenObject.token
-                    },
-                    method: "POST"
-                });
-            } catch (error) {
-                console.log(error);
+            const response = await fetch(`${config.base_url}/invoices`, {
+                body: JSON.stringify(invoiceObject),
+                headers: {
+                    "content-type": "application/json",
+                    "x-access-token": tokenObject.token
+                },
+                method: "POST"
+            });
+
+            const result = await response.json();
+
+            if (result.data.creation_date === null) {
+                return {
+                    message: "Information saknas",
+                    description: "Du måste fylla i order och fakturadatum",
+                    title: "danger"
+                }
+            } else {
+                return {
+                        message: "Registrerad",
+                        description: "Fakturan är registrerad",
+                        title: "success"
+                    };
             }
         },
 };
